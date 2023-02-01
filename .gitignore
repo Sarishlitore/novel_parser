@@ -1,3 +1,11 @@
 /book_test/
 /chromedriver.exe
 /Books/
+/.idea/modules.xml
+/.idea/.name
+/.idea/encodings.xml
+/.idea/misc.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/scrape_and_translate_book.iml
+/.idea/workspace.xml
