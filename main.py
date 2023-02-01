@@ -1,11 +1,11 @@
 from book_translator.book_translator import BookTranslator
 from book_writer.book_writer import FB2Writer
-from source.source_by_nxt_btn import Fanfiction, Jaomix, Novelnext
+from source.source_by_nxt_btn import Fanfiction, Novelnext
 
 if __name__ == '__main__':
-    novelnext = Novelnext.form_source('https://novelnext.com/novelnext/tyranny-of-steel',
-                                      'https://novelnext.com/novelnext/tyranny-of-steel/chapter-1',
-                                      'https://novelnext.com/novelnext/tyranny-of-steel/chapter-100')
+    novelnext = Novelnext.form_source('',
+                                      '',
+                                      '')
     book = novelnext.scrape(1)
     book_writer = FB2Writer()
     book_writer.write(book, 'book_test')
