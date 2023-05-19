@@ -1,12 +1,8 @@
 from abc import ABC, abstractmethod
-
 from book.book import Book
 
 
-class BookWriter(ABC):
+class BookReader(ABC):
     @abstractmethod
-    def write(self, book: Book, dirname: str):
+    def read(self, book_name: str, dirname='/') -> Book:
         pass
-
-
-

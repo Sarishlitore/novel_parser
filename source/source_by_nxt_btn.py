@@ -3,10 +3,10 @@ from selenium.webdriver.support.select import Select
 
 
 class SourceByNextButton(Source, ABC):
-    def __init__(self, book_url: str, book_name_xpath: str, book_author_xpath: str,
+    def __init__(self, book_url: str, book_title_xpath: str, book_author_xpath: str,
                  first_chapter_url: str, first_chapter_next_button_xpath: str, last_chapter_url: str,
                  chapter_title_xpath: str, chapter_content_xpath: str, next_button_xpath: str):
-        super().__init__(book_url, book_name_xpath, book_author_xpath)
+        super().__init__(book_url, book_title_xpath, book_author_xpath)
         self._first_chapter_url = first_chapter_url
         self._first_chapter_next_button_xpath = first_chapter_next_button_xpath
         self._last_chapter_url = last_chapter_url
@@ -19,6 +19,10 @@ class SourceByNextButton(Source, ABC):
         pass
 
     def _scrape_chapter(self, driver: uc, sleep_time) -> (str, list[str]):
+
+        def beautify():
+            pass
+
         time.sleep(sleep_time)
         chapter_title = self._get_chapter_title(driver)
         chapter_content = driver.find_element(By.XPATH, self._chapter_content_xpath).text.split('\n')
@@ -43,10 +47,11 @@ class SourceByNextButton(Source, ABC):
     def scrape(self, sleep_time=5) -> Book:
         driver = uc.Chrome(driver_executable_path='chromedriver.exe')
         book = self._form_book(driver, sleep_time)
+        print(book.title, book.author)
         self._scrape_first_chapter(driver, book, sleep_time)
         self._scrape_chapters(driver, book, sleep_time)
         driver.quit()
-        print(f'{book.name} scraped')
+        print(f'{book.title} scraped')
         return book
 
 
@@ -54,7 +59,7 @@ class Fanfiction(SourceByNextButton):
     @classmethod
     def form_source(cls, book_url: str, first_chapter_url: str, last_chapter_url: str):
         return cls(book_url=book_url,
-                   book_name_xpath='//*[@id="profile_top"]/b',
+                   book_title_xpath='//*[@id="profile_top"]/b',
                    book_author_xpath='//*[@id="profile_top"]/a[1]',
                    first_chapter_url=first_chapter_url,
                    first_chapter_next_button_xpath='//*[@id="content_wrapper_inner"]/span/button',
@@ -71,7 +76,7 @@ class Scribblehub(SourceByNextButton):
     @classmethod
     def form_source(cls, book_url: str, first_chapter_url: str, last_chapter_url: str):
         return cls(book_url=book_url,
-                   book_name_xpath='//*[@id="page"]/div/div[4]/div/div[1]/div[1]',
+                   book_title_xpath='//*[@id="page"]/div/div[4]/div/div[1]/div[1]',
                    book_author_xpath='//*[@id="page"]/div/div[4]/div/div[4]/div[1]/div/div[3]/span/a/span',
                    first_chapter_url=first_chapter_url,
                    first_chapter_next_button_xpath='//*[@id="chp_contents"]/div[1]/div/a[2]',
@@ -88,7 +93,7 @@ class Mtlnovel(SourceByNextButton):
     @classmethod
     def form_source(cls, book_url: str, first_chapter_url: str, last_chapter_url: str):
         return cls(book_url=book_url,
-                   book_name_xpath='/html/body/main/article/div[1]/h1',
+                   book_title_xpath='/html/body/main/article/div[1]/h1',
                    book_author_xpath='//*[@id="author"]/a',
                    first_chapter_url=first_chapter_url,
                    first_chapter_next_button_xpath='/html/body/main/article/div/div[2]/div[1]/a[1]',
@@ -105,7 +110,7 @@ class Tlrulate(SourceByNextButton):
     @classmethod
     def form_source(cls, book_url: str, first_chapter_url: str, last_chapter_url: str):
         return cls(book_url=book_url,
-                   book_name_xpath='/html/body/div[2]/div/div[1]/h1',
+                   book_title_xpath='/html/body/div[2]/div/div[1]/h1',
                    book_author_xpath='//*[@id="Info"]/div[1]/div[2]/p[4]/em/a',
                    first_chapter_url=first_chapter_url,
                    first_chapter_next_button_xpath='//*[@id="text-container"]/ul/li[2]/a',
@@ -122,8 +127,8 @@ class Novelnext(SourceByNextButton):
     @classmethod
     def form_source(cls, book_url: str, first_chapter_url: str, last_chapter_url: str):
         return cls(book_url=book_url,
-                   book_name_xpath='//*[@id="novel"]/div[1]/div[1]/div[3]/h3',
-                   book_author_xpath='//*[@id="novel"]/div[1]/div[1]/div[3]/ul/li[1]/a',
+                   book_title_xpath='//*[@id="novel"]/div[1]/div[1]/div[3]/h3',
+                   book_author_xpath='//*[@id="novel"]/div[1]/div[1]/div[3]/ul/li[2]/a',
                    first_chapter_url=first_chapter_url,
                    first_chapter_next_button_xpath='//*[@id="next_chap"]',
                    last_chapter_url=last_chapter_url,
@@ -133,3 +138,13 @@ class Novelnext(SourceByNextButton):
 
     def _get_chapter_title(self, driver: uc) -> str:
         return driver.find_element(By.XPATH, self._chapter_title_xpath).text
+
+    @staticmethod
+    def some_func(self, arg: str) -> None:
+        i = f"hello {arg}"
+        return
+
+    @classmethod
+    def some_class_method(cls):
+        return
+   

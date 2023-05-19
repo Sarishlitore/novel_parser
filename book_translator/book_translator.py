@@ -19,14 +19,14 @@ class BookTranslator:
             return []
 
     def translate_book(self, book: Book, sleep_time=5) -> Book:
-        translated_book_name = self._translate(book.name).text
+        translated_book_title = self._translate(book.title).text
         translated_book_author = self._translate(book.author).text
-        translated_book = Book(translated_book_name, translated_book_author)
+        translated_book = Book(translated_book_title, translated_book_author)
         for chapter in book.chapters_list:
-            chapter_name = self._translate(chapter.name).text
+            chapter_title = self._translate(chapter.title).text
             chapter_content = [par.text for par in self._translate(chapter.content)]
             time.sleep(sleep_time)
-            translated_book.add_chapter(chapter_name, chapter_content)
-            print(f'{chapter_name} translated')
-        print(f'{book.name} translated')
+            translated_book.add_chapter(chapter_title, chapter_content)
+            print(f'{chapter_title} translated')
+        print(f'{book.title} translated')
         return translated_book
